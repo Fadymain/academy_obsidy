@@ -12,7 +12,7 @@ public class ExceptionLearning {
         	
         } catch (ArithmeticException e) {
         	
-        	System.out.println("The number canot be divided by zero");
+        	System.out.println("The number cannot be divided by zero");
             
         }
     }
