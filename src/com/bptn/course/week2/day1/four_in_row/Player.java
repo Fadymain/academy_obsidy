@@ -46,13 +46,4 @@ public class Player {
         return ("Player " + playerNumber + " is " + name);
     }
 	
-//	public static void main(String[] args) {
-//		Player player = new Player("Tola", "1");
-//		player.makeMove();
-////		System.out.println(player);
-//		
-//		
-//		
-//	}
-
 }

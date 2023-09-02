@@ -49,7 +49,7 @@ public class Board {
         return true;
     }
 
-    public boolean addToken(int colToAddToken, String token) {
+    public boolean addToken(int colToAddToken, String token) throws ColumnFullException {
         int rowToAddToken = board.length - 1;
 
         while (rowToAddToken >= 0 && board[rowToAddToken][colToAddToken].equals("-"))  {
@@ -60,7 +60,7 @@ public class Board {
                board[rowToAddToken + 1][colToAddToken] = token;
                 return true;
             } else {
-            	return false;
+            	throw new ColumnFullException("Column " + colToAddToken + " is full.");
             }
 
     }
@@ -148,51 +148,49 @@ public class Board {
     
     //Uncomment below to see if you've done the job:
      public static void main(String[] args) {
-         Board board1 = new Board();
-         board1.boardSetUp();
-         board1.printBoard();
-
-         board1.addToken(0, "x");
-         board1.addToken(0, "x");
-         board1.addToken(0, "x");
-         board1.addToken(1, "y");
-         board1.addToken(1, "z");
-         board1.addToken(1, "w");
-         board1.addToken(0, "x");
-
-         System.out.println("Board for testing checkVertical");
-         System.out.println("Board 1 check vertical with x returns -> " + board1.checkVertical("x"));
-         System.out.println("Board 1 check vertical with y returns -> " + board1.checkVertical("y"));
-
-         board1.printBoard();
-
-         Board board2 = new Board();
-         // Test with at least a 4-by-4 size board.
-        board2.boardSetUp();
-        board2.printBoard();
-
-         board2.addToken(0, "x");
-         board2.addToken(0, "x");
-         board2.addToken(0, "w");
-         board2.addToken(0, "w");
-         board2.addToken(1, "y");
-         board2.addToken(1, "x");
-         board2.addToken(1, "w");
-         board2.addToken(2, "y");
-         board2.addToken(2, "w");
-         board2.addToken(2, "x");
-         board2.addToken(3, "w");
-         board2.addToken(3, "w");
-         board2.addToken(3, "w");
-         board2.addToken(3, "x");
-
-         System.out.println("Board for testing diagonals");
-         System.out.println("Board 2 check right diagonal with x returns -> " + board2.checkRightDiagonal("x"));
-         System.out.println("Board 2 check right diagonal y returns -> " + board2.checkRightDiagonal("y"));
-         System.out.println("Board 2 check left diagonal w returns -> " + board2.checkLeftDiagonal("w"));
-
-         board2.printBoard();
-         
-         scanner.close();
+         try {
+			Board board1 = new Board();
+			board1.boardSetUp();
+			board1.printBoard();
+			board1.addToken(0, "x");
+			board1.addToken(0, "x");
+			board1.addToken(0, "x");
+			board1.addToken(1, "y");
+			board1.addToken(1, "z");
+			board1.addToken(1, "w");
+			board1.addToken(0, "x");
+			System.out.println("Board for testing checkVertical");
+			System.out.println("Board 1 check vertical with x returns -> " + board1.checkVertical("x"));
+			System.out.println("Board 1 check vertical with y returns -> " + board1.checkVertical("y"));
+			board1.printBoard();
+			Board board2 = new Board();
+			// Test with at least a 4-by-4 size board.
+			board2.boardSetUp();
+			board2.printBoard();
+			board2.addToken(0, "x");
+			board2.addToken(0, "x");
+			board2.addToken(0, "w");
+			board2.addToken(0, "w");
+			board2.addToken(1, "y");
+			board2.addToken(1, "x");
+			board2.addToken(1, "w");
+			board2.addToken(2, "y");
+			board2.addToken(2, "w");
+			board2.addToken(2, "x");
+			board2.addToken(3, "w");
+			board2.addToken(3, "w");
+			board2.addToken(3, "w");
+			board2.addToken(3, "x");
+			System.out.println("Board for testing diagonals");
+			System.out.println("Board 2 check right diagonal with x returns -> " + board2.checkRightDiagonal("x"));
+			System.out.println("Board 2 check right diagonal y returns -> " + board2.checkRightDiagonal("y"));
+			System.out.println("Board 2 check left diagonal w returns -> " + board2.checkLeftDiagonal("w"));
+			board2.printBoard();
+		} catch (ColumnFullException e) {
+			System.out.println("Column is full. Please choose another column.");
+	        e.printStackTrace();
+		} finally {			
+			scanner.close();
+		}
      }
 }

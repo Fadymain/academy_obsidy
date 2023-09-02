@@ -48,11 +48,15 @@ public class Game {
 
     public void playerTurn(Player currentPlayer) {
         int col = currentPlayer.makeMove();
-        while (!board.addToken(col, currentPlayer.getPlayerNumber())) {
-           System.out.println("Invalid, make another input");
-           col = currentPlayer.makeMove();
-        }
-        board.printBoard();
+        try {
+			while (!board.addToken(col, currentPlayer.getPlayerNumber())) {
+				System.out.println("Invalid, make another input");
+				col = currentPlayer.makeMove();
+			} 
+		} catch (ColumnFullException e) {
+			System.out.println("Column is full. Please choose another column.");
+		}
+		board.printBoard();
     }
 
     public void play() {
