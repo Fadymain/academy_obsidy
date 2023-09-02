@@ -6,6 +6,8 @@ public class Board {
 	private String[][] board;
 	static Scanner scanner = new Scanner(System.in);
 
+	
+	// Method to set up the game board
 	public void boardSetUp() {
         
 		System.out.println("------ Board Set up -------");
@@ -18,7 +20,6 @@ public class Board {
         
         this.board = new String[rows][cols];
 
-        // initialize empty board with dashes (-)
         for (String[] row : board) {
             Arrays.fill(row, "-");
         }
@@ -26,6 +27,8 @@ public class Board {
        
     }
 
+	
+	// Method to print the current state of the game board
     public void printBoard() {
         for (String[] row : board) {
             System.out.println(Arrays.toString(row));
@@ -46,7 +49,7 @@ public class Board {
                 return false;
             }
         }
-        return true;
+        return true; // Board is full
     }
 
     public boolean addToken(int colToAddToken, String token) throws ColumnFullException {
@@ -71,11 +74,10 @@ public class Board {
         } else if (checkLeftDiagonal(playerNumber)) {
             return true;
         }
-        // what other conditions should we include here?
-        return false;
+        return false; // Player has not won yet
     }
     
-
+    // Method to check for a vertical win
     public boolean checkVertical(String playerNumber) {
         for (int col = 0; col < board[0].length; col++) {
             // length - 3 here because we are comparing 4 in a row items
@@ -94,6 +96,8 @@ public class Board {
 
     }
 
+    
+    // Method to check for a horizontal win
     public boolean checkHorizontal(String playerNumber) {
         for (int col = 0; col < board[0].length - 3; col++) {
            for (int row = 0; row < board.length; row++) {
@@ -122,7 +126,9 @@ public class Board {
         }
         return false;
     }
-
+    
+     
+     // Method to check for a right diagonal win
     public boolean checkRightDiagonal(String playerNumber) {
        for (int row = 0; row <= board.length -4; row++) {
     	   for (int col = 3; col < board[0].length; col++) {

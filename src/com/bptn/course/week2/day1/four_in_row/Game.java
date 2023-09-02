@@ -14,6 +14,8 @@ public class Game {
         board = new Board();
     }
 
+    
+ // Method to set up the game
     public void setUpGame() {
         System.out.println("Enter player 1's name: ");
         players[0] = new Player(scanner.nextLine(), "1");
@@ -25,10 +27,9 @@ public class Game {
         	System.out.println("Enter player 2's name: ");
         	playerTwoName = scanner.nextLine();
         	
+        	// Check if player 2 has the same name as player 1
         	 if (playerTwoName.equals (players[0].getName())) {
-
         		 System.out.println("Error! Both Players cannot have the same name.");
-          	   
              }
         } while (playerTwoName.equals (players[0].getName()));
         
@@ -36,9 +37,8 @@ public class Game {
        
         players[1] = new Player(playerTwoName, "2");
 
-        
+        // Set up the game board
         board.boardSetUp();
-
         board.printBoard();
     }
 
@@ -46,6 +46,8 @@ public class Game {
         System.out.println(player.getName() + " is the winner");
     }
 
+    
+    // Method to handle a player's turn
     public void playerTurn(Player currentPlayer) {
         int col = currentPlayer.makeMove();
         try {
@@ -59,6 +61,8 @@ public class Game {
 		board.printBoard();
     }
 
+    
+    // Method to start and manage the game
     public void play() {
         boolean noWinner = true;
         this.setUpGame();

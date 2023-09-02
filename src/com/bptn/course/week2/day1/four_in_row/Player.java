@@ -7,11 +7,10 @@ public class Player {
 	private String playerNumber;
     
 
-    // Question: should scanner be static or not?
+   
     private static Scanner scanner = new Scanner(System.in);// complete line
 
     public Player(String name, String playerNumber) {
-        // complete constructor
     	this.name = name;
     	this.playerNumber = playerNumber;
     }
