@@ -1,10 +1,39 @@
 package com.bptn.course.week2.day1.four_in_row;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Board {
 	private String[][] board;
+	private int winCondition = 4;
 	static Scanner scanner = new Scanner(System.in);
+	
+	private List<Integer> playerMoves = new ArrayList<>();
+	
+	public void setWinCondition(int condition) {
+        this.winCondition = condition;
+    }
+	
+	public void undoLastMove() {
+	    if (!playerMoves.isEmpty()) {
+	        int col = playerMoves.remove(playerMoves.size() - 1);
+	        
+	        // Find the row where the token was placed in the specified column
+	        int rowToRemoveToken = board.length - 1;
+	        while (rowToRemoveToken >= 0 && board[rowToRemoveToken][col].equals("-")) {
+	            rowToRemoveToken--;
+	        }
+	        
+	        if (rowToRemoveToken >= 0) {
+	            board[rowToRemoveToken][col] = "-"; // Revert the cell to its initial state
+	        }
+	        
+	        // Optionally, you can print the board after undoing the move
+	        System.out.println("Undo: Removed token from column " + col);
+	        printBoard();
+	    }
+	}
 
 	
 	// Method to set up the game board
@@ -61,11 +90,11 @@ public class Board {
         
             if (rowToAddToken + 1 < board.length) {
                board[rowToAddToken + 1][colToAddToken] = token;
+               playerMoves.add(colToAddToken);
                 return true;
             } else {
             	throw new ColumnFullException("Column " + colToAddToken + " is full.");
             }
-
     }
 
     public boolean checkIfPlayerIsTheWinner(String playerNumber) {
@@ -99,15 +128,22 @@ public class Board {
     
     // Method to check for a horizontal win
     public boolean checkHorizontal(String playerNumber) {
-        for (int col = 0; col < board[0].length - 3; col++) {
-           for (int row = 0; row < board.length; row++) {
-        	   if (board[row][col].equals(playerNumber)
-                       && board[row][col].equals(board[row][col + 1])
-                       && board[row][col].equals(board[row][col + 2])
-                       && board[row][col].equals(board[row][col + 3])) {
-        		   return true;
-        	   }
-           }
+    	for (int col = 0; col < board[0].length; col++) {
+            for (int row = 0; row < board.length; row++) {
+                if (board[row][col].equals(playerNumber)) {
+                    int count = 1;
+                    for (int i = 1; i < winCondition; i++) {
+                        if (col + i < board[0].length && board[row][col + i].equals(playerNumber)) {
+                            count++;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (count >= winCondition) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }

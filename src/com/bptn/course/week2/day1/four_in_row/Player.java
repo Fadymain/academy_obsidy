@@ -5,17 +5,43 @@ public class Player {
 	
 	private String name;
 	private String playerNumber;
+	private String tokenColor;
+	private String tokenShape;
     
 
    
-    private static Scanner scanner = new Scanner(System.in);// complete line
+    public String getTokenColor() {
+		return tokenColor;
+	}
+
+
+
+	public void setTokenColor(String tokenColor) {
+		this.tokenColor = tokenColor;
+	}
+
+
+
+	public String getTokenShape() {
+		return tokenShape;
+	}
+
+
+
+	public void setTokenShape(String tokenShape) {
+		this.tokenShape = tokenShape;
+	}
+
+
+	private static Scanner scanner = new Scanner(System.in);// complete line
 
     public Player(String name, String playerNumber) {
     	this.name = name;
     	this.playerNumber = playerNumber;
     }
 
-    // create getter methods
+    
+    
     public String getName() {
 		return name;
 	}

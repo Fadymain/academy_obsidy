@@ -1,11 +1,15 @@
 package com.bptn.course.week2.day1.four_in_row;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
 	
 	private Player[] players;
     private Board board;
     private static Scanner scanner = new Scanner(System.in);
+    private Timer gameTimer;
+    private int gameTimeInSeconds = 600;
 
     public Game(Player[] players, Board board) {
         
@@ -13,33 +17,60 @@ public class Game {
         this.board = board; 
         board = new Board();
     }
+    
+    private void startGameTimer() {
+        gameTimer = new Timer();
+        gameTimer.schedule(new TimerTask() {
+            public void run() {
+                System.out.println("Game over! Time's up.");
+                gameTimer.cancel();
+            }
+        }, gameTimeInSeconds * 1000); // Convert seconds to milliseconds
+    }
 
     
  // Method to set up the game
     public void setUpGame() {
-        System.out.println("Enter player 1's name: ");
-        players[0] = new Player(scanner.nextLine(), "1");
+    	
+    	System.out.println("How many players will be participating?");
+        int numPlayers = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Create an array to store player objects
+        players = new Player[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            System.out.println("Enter the name for Player " + (i + 1) + ":");
+            String playerName = scanner.nextLine();
+            String playerNumber = Integer.toString(i + 1);
+
+            players[i] = new Player(playerName, playerNumber);
+        }
         
-        String playerTwoName;
-        
-        do {
-        	
-        	System.out.println("Enter player 2's name: ");
-        	playerTwoName = scanner.nextLine();
-        	
-        	// Check if player 2 has the same name as player 1
-        	 if (playerTwoName.equals (players[0].getName())) {
-        		 System.out.println("Error! Both Players cannot have the same name.");
-             }
-        } while (playerTwoName.equals (players[0].getName()));
-        
-        
-       
-        players[1] = new Player(playerTwoName, "2");
+        System.out.println("Select a win condition:");
+        System.out.println("1. Standard (4 in a row)");
+        System.out.println("2. Custom (Enter your own win condition)");
+        int winConditionChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        if (winConditionChoice == 2) {
+            System.out.println("Enter the desired win condition (e.g., 5 in a row):");
+            board.setWinCondition(scanner.nextInt());
+            scanner.nextLine(); // Consume newline character
+        }
 
         // Set up the game board
         board.boardSetUp();
         board.printBoard();
+        startGameTimer();
+        
+        //Allow players to customize their tokens during setup:
+        for (Player player : players) {
+            System.out.println(player.getName() + ", customize your token:");
+            System.out.print("Color: ");
+            player.setTokenColor(scanner.nextLine());
+            System.out.print("Shape: ");
+            player.setTokenShape(scanner.nextLine());
+        }
     }
 
     public void printWinner(Player player) {
