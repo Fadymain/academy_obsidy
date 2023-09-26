@@ -28,7 +28,7 @@ public class HiddenWord {
 	    	return hint.toString();
 	    }
 
-	    /** This is a main method for testing the class */
+	    
 	    public static void main(String[] args) {
 	        HiddenWord puzzle = new HiddenWord("HARPS");
 	        System.out.println(puzzle.getHint("AAAAA") + " it should print +A+++");
